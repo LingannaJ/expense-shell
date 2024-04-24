@@ -27,3 +27,15 @@ then
 else 
     echo "you are super user."
 fi
+
+dnf install mysql-server -y &>>$LOGFILE
+VALIDATE $? "Installing MYSQL server"
+
+systemctl enable mysqld &>>$LOGFILE
+VALIDATE $? "Enabling MYSQL server"
+
+systemctl start mysqld &>>$LOGFILE
+VALIDATE $? "Starting MYSQL server"
+
+mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+VALIDATE $? "Setting up root passward" 
